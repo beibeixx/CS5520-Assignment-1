@@ -5,7 +5,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import ConfirmScreen from './ConfirmScreen'
 
 
-export default function StartScreen({ onRegister }) {
+export default function StartScreen({ onStartGame }) {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
@@ -82,7 +82,7 @@ export default function StartScreen({ onRegister }) {
 
   const handleConfirmContinue = () => {
     setIsConfirmVisible(false);
-    // onRegister({ name, email, phone });
+    onStartGame({ name, email, phone });
   };
 
   return (
