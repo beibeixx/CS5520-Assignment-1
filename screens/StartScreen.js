@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { StyleSheet, Text, TextInput, View, Button, Alert, SafeAreaView } from 'react-native';
 import Checkbox from 'expo-checkbox';
 import { LinearGradient } from 'expo-linear-gradient';
+import ConfirmScreen from './ConfirmScreen'
 
 
 export default function StartScreen({ onRegister }) {
@@ -10,7 +11,7 @@ export default function StartScreen({ onRegister }) {
   const [phone, setPhone] = useState('');
   const [isChecked, setIsChecked] = useState(false);
   const [errors, setErrors] = useState({ name: '', email: '', phone: '' });
-  const [touched, setTouched] = useState({ name: false, email: false, phone: false });
+  const [isConfirmVisible, setIsConfirmVisible] = useState(false);
 
   const validateName = (name) => {
     if (name.length <= 1 || name.match(/\d/)) {
@@ -49,9 +50,7 @@ export default function StartScreen({ onRegister }) {
     setErrors(prev => ({ ...prev, phone: validatePhone(text) }));
   };
 
-  const handleBlur = (field) => {
-    setTouched(prev => ({ ...prev, [field]: true }));
-  };
+
 
   const handleReset = () => {
     setName('');
@@ -59,12 +58,9 @@ export default function StartScreen({ onRegister }) {
     setPhone('');
     setIsChecked(false);
     setErrors({ name: '', email: '', phone: '' });
-    setTouched({ name: false, email: false, phone: false });
   };
 
   const handleRegister = () => {
-    const newTouched = { name: true, email: true, phone: true };
-    setTouched(newTouched);
     
     const newErrors = {
       name: validateName(name),
@@ -76,8 +72,17 @@ export default function StartScreen({ onRegister }) {
     if (!name || !email || !phone || !isChecked || newErrors.name || newErrors.email || newErrors.phone) {
       Alert.alert('Invalid Input', 'Please fill all fields correctly and accept the terms.');
     } else {
-      onRegister({ name, email, phone });
+      setIsConfirmVisible(true);
     }
+  };
+
+  const handleConfirmGoBack = () => {
+    setIsConfirmVisible(false);
+  };
+
+  const handleConfirmContinue = () => {
+    setIsConfirmVisible(false);
+    // onRegister({ name, email, phone });
   };
 
   return (
@@ -94,7 +99,6 @@ export default function StartScreen({ onRegister }) {
           style={styles.input}
           value={name}         
           onChangeText={handleNameChange}
-          onBlur={() => handleBlur('name')}
         />
         <Text style={styles.errorText}>{errors.name}</Text>
 
@@ -103,7 +107,6 @@ export default function StartScreen({ onRegister }) {
           style={styles.input}
           value={email}
           onChangeText={handleEmailChange}
-          onBlur={() => handleBlur('email')}
         />
         <Text style={styles.errorText}>{errors.email}</Text>
 
@@ -112,7 +115,6 @@ export default function StartScreen({ onRegister }) {
           style={styles.input}
           value={phone}
           onChangeText={handlePhoneChange}
-          onBlur={() => handleBlur('phone')}
         />
         <Text style={styles.errorText}>{errors.phone}</Text>
 
@@ -125,15 +127,22 @@ export default function StartScreen({ onRegister }) {
         </View>
 
         <View style={styles.buttonContainer}>
-          <Button title="Reset" color="red" onPress={handleReset} />
+          <Button title="Reset" color="#B10050" onPress={handleReset} />
           <Button
             title="Register"
+            color="#0013FF"
             onPress={handleRegister}
             disabled={!isChecked}
           />
         </View>
       </View>
     </SafeAreaView>
+    <ConfirmScreen
+      visible={isConfirmVisible}
+      userData={{ name, email, phone }}
+      onGoBack={handleConfirmGoBack}
+      onContinue={handleConfirmContinue} 
+    />
     </LinearGradient>
   );
 }
@@ -160,13 +169,13 @@ const styles = StyleSheet.create({
   },
   card: {
     width: '80%',
-    padding: 20,
+    padding: 15,
     borderRadius: 10,
-    backgroundColor: 'white',
+    backgroundColor: '#959295',
     shadowColor: "#000",
     shadowOffset: {
-      width: 8,
-      height: 8,
+      width: 5,
+      height: 5,
     },
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
@@ -181,6 +190,9 @@ const styles = StyleSheet.create({
     padding: 10,
     marginBottom: 10,
     borderRadius: 5,
+    color: '#33009F',
+    fontWeight: 'bold',
+    textAlign: 'center',
   },
   errorText: {
     color: '#3A3A37',
