@@ -25,11 +25,8 @@ export default function App() {
       {currentScreen === 'start' && (
         <StartScreen onStartGame={handleStartGame} />
       )}
-      {/* {currentScreen === 'game' && (
-        <GameScreen userData={userData} onRestart={handleRestart} />
-      )} */}
       {currentScreen === 'game' && (
-        <GameScreen />
+        <GameScreen userData={userData} onRestart={handleRestart} />
       )}
     </>
   );
