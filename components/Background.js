@@ -1,10 +1,12 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import { LinearGradient } from 'expo-linear-gradient';
+import { colorHelper } from '../helper/colorHelper';
+
 
 
 export default function Background({ children, isTransparent = false }) {
-    const colors = isTransparent ? ['rgba(119,200,240,0.8)', 'rgba(116,130,188,0.8)'] : ['#77c8f0', '#7482bc'] ;
+    const colors = isTransparent ? [colorHelper.backgroundTransparent.start, colorHelper.backgroundTransparent.end] : [colorHelper.background.start, colorHelper.background.end] ;
 
     return (
         <LinearGradient

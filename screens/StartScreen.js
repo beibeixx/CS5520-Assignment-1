@@ -5,6 +5,8 @@ import { LinearGradient } from 'expo-linear-gradient';
 import ConfirmScreen from './ConfirmScreen'
 import Card from '../components/Card';
 import Background from '../components/Background';
+import { colorHelper } from '../helper/colorHelper';
+
 
 
 export default function StartScreen({ onStartGame }) {
@@ -53,7 +55,6 @@ export default function StartScreen({ onStartGame }) {
   };
 
 
-
   const handleReset = () => {
     setName('');
     setEmail('');
@@ -92,7 +93,7 @@ export default function StartScreen({ onStartGame }) {
     <Background>
     <SafeAreaView style={styles.safeArea}>
       <Text style={styles.title}>Welcome</Text>
-      <View style={styles.card}>
+      <Card style={styles.card}>
         <Text style={styles.hint}>Name</Text>
         <TextInput 
           style={styles.input}
@@ -126,15 +127,15 @@ export default function StartScreen({ onStartGame }) {
         </View>
 
         <View style={styles.buttonContainer}>
-          <Button title="Reset" color="#B10050" onPress={handleReset} />
+          <Button title="Reset" color={colorHelper.secondary} onPress={handleReset} />
           <Button
             title="Register"
-            color="#0013FF"
+            color={colorHelper.primary}
             onPress={handleRegister}
             disabled={!isChecked}
           />
         </View>
-      </View>
+      </Card>
     </SafeAreaView>
     <ConfirmScreen
       visible={isConfirmVisible}
@@ -147,12 +148,6 @@ export default function StartScreen({ onStartGame }) {
 }
 
 const styles = StyleSheet.create({
-  gradient: {
-    flex: 1,
-    width: '100%',
-    height: '100%',
-  },
-  gradientColors: ['#77c8f0', '#7482bc'],
   safeArea: {
     flex: 1,
     alignItems: 'center',
@@ -164,24 +159,13 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginBottom: 60,
     textAlign: 'center',
-    color: "#2E06A3",
+    color: colorHelper.title,
   },
   card: {
     width: '80%',
-    padding: 15,
-    borderRadius: 10,
-    backgroundColor: '#959295',
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 5,
-      height: 5,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-    elevation: 5,
   },
   hint: {
-    color: '#33009F',
+    color: colorHelper.text.primary,
   },
   input: {
     borderBottomWidth: 1,
@@ -189,12 +173,12 @@ const styles = StyleSheet.create({
     padding: 10,
     marginBottom: 10,
     borderRadius: 5,
-    color: '#33009F',
+    color: colorHelper.text.primary,
     fontWeight: 'bold',
     textAlign: 'center',
   },
   errorText: {
-    color: '#3A3A37',
+    color: colorHelper.text.secondary,
     marginBottom: 10,
   },
   checkboxContainer: {

@@ -1,5 +1,7 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
+import { colorHelper } from '../helper/colorHelper';
+
 
 export default function Card({ children, style }) {
     return <View style={[styles.card, style]}>{children}</View>;
@@ -7,10 +9,10 @@ export default function Card({ children, style }) {
 
 const styles = StyleSheet.create({
     card: {
-      backgroundColor: '#959295',
+      backgroundColor: colorHelper.card,
       borderRadius: 10,
       padding: 15,
-      shadowColor: "#000",
+      shadowColor: colorHelper.black,
       shadowOffset: {
         width: 5,
         height: 5,

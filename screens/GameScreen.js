@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { StyleSheet, Text, View, SafeAreaView, TouchableOpacity, Button, TextInput, Alert, Image} from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import Background from '../components/Background';
+import Card from '../components/Card';
 
 export default function GameScreen({ userData, onRestart }) {
   const [gameState, setGameState] = useState('initial');
@@ -176,9 +177,9 @@ export default function GameScreen({ userData, onRestart }) {
           <Button title="Restart" onPress={onRestart} />
         </View>
         <View style={styles.content}>
-          <View style={styles.card}>
+          <Card style={styles.card}>
             {renderCard()}
-          </View>
+          </Card>
         </View>
       </SafeAreaView>
     </Background>
@@ -186,9 +187,6 @@ export default function GameScreen({ userData, onRestart }) {
 }
 
 const styles = StyleSheet.create({
-  gradient: {
-    flex: 1,
-  },
   safeArea: {
     flex: 1,
     width: '100%',
@@ -203,18 +201,7 @@ const styles = StyleSheet.create({
   },
   card: {
     width: '80%',
-    backgroundColor: '#959295',
-    borderRadius: 10,
-    padding: 20,
     alignItems: 'center',
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-    elevation: 5,
   },
   cardText: {
     fontSize: 16,
