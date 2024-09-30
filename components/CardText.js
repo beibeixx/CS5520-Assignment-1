@@ -9,7 +9,7 @@ export default function CardText({ children, style }) {
 
 const styles = StyleSheet.create({
     cardText: {
-        fontSize: 16,
+        fontSize: 18,
         color: colorHelper.text.primary,
       },
   });

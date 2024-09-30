@@ -4,6 +4,7 @@ import Background from '../components/Background';
 import Card from '../components/Card';
 import CardText from '../components/CardText';
 import Input from '../components/Input';
+import { colorHelper } from '../helper/colorHelper';
 
 export default function GameScreen({ userData, onRestart }) {
   const [gameState, setGameState] = useState('initial');
@@ -57,8 +58,6 @@ export default function GameScreen({ userData, onRestart }) {
     if (guessNum === targetNumber) {
       clearInterval(intervalRef.current);
       setGameState('won');
-    } else if (attempts === 1) {
-      endGame('attempts');
     } else {
       setGuessResult(guessNum > targetNumber ? "lower" : "higher");
       setGameState('guessing');
@@ -77,7 +76,11 @@ export default function GameScreen({ userData, onRestart }) {
   };
   
   const tryAgain = () => {
-    setGameState('playing');
+    if (attempts === 0) {
+      endGame('attempts');
+    } else{
+      setGameState('playing');
+    }
   };
 
   const endGame = (reason) => {
@@ -132,43 +135,43 @@ export default function GameScreen({ userData, onRestart }) {
               <Text style={styles.infoText}>Timer: {timer}s</Text>
             </View>
             <View style={styles.buttonContainer}>
-              <Button title="Use a Hint" color="#0013FF" onPress={useHint} disabled={hintUsed} />
-              <Button title="Submit guess" color="#0013FF" onPress={handleSubmitGuess} />
+              <Button title="Use a Hint" color={colorHelper.primary} onPress={useHint} disabled={hintUsed} />
+              <Button title="Submit guess" color={colorHelper.primary} onPress={handleSubmitGuess} />
             </View>
           </>
         );
       case 'guessing':
         return (
           <>
-            <CardText style={styles.cardText}>You did not guess correct!
+            <CardText style={styles.cardText}>You did not guess correct! {'\n'}
               You should guess {guessResult}.</CardText>
             <View style={styles.buttonContainer}>
-              <Button title="Try Again" onPress={tryAgain} />
-              <Button title="End the game" onPress={() => endGame('gaveUp')} />
+              <Button title="Try Again" color={colorHelper.primary} onPress={tryAgain} />
+              <Button title="End the game" color={colorHelper.primary} onPress={() => endGame('gaveUp')} />
             </View>
           </>
         );
       case 'won':
         return (
           <>
-            <CardText style={styles.cardText}>You guessed correct!
+            <CardText style={styles.cardText}>You guessed correct!{'\n'}
               Attempts used: {4 - attempts}</CardText>
             <Image 
               source={{uri: `https://picsum.photos/id/${targetNumber}/100/100`}}
               style={styles.image}
             />
-            <Button title="New Game" onPress={newGame} />
+            <Button title="New Game" onPress={newGame} color={colorHelper.primary} />
           </>
         );
       case 'over':
         return (
           <>
-            <Text style={styles.cardText}>The game is over</Text>
+            <CardText style={styles.cardText}>The game is over</CardText>
             <Image source={require('../assets/sad-smiley.png')} style={styles.image} />
-            <Text style={styles.cardText}>
+            <CardText style={styles.cardText}>
               {guessResult === 'timer' ? "You are out of time" : guessResult === 'attempts' ? "you are out of attempts" : "You end the game"}
-            </Text>
-            <Button title="New Game" onPress={newGame} />
+            </CardText>
+            <Button title="New Game" onPress={newGame} color={colorHelper.primary} />
           </>
         );
     }
@@ -216,23 +219,13 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginBottom: 20,
   },
-  cardText: {
-    fontSize: 20,
-    color: '#33009F',
-    textAlign: 'center',
-    marginBottom: 20,
-  },
-  // input: {
-  //   height: 40,
-  //   width: '40%',
-  // },
   infoContainer: {
     alignItems: 'center',
     marginBottom: 20,
   },
   infoText: {
     fontSize: 18,
-    color: '#3A3A37',
+    color: colorHelper.text.secondary,
     marginVertical: 4,
   },
   buttonContainer: {
