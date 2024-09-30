@@ -1,19 +1,27 @@
-import React, { useState, useRef, useEffect } from 'react';
-import { StyleSheet, Text, View, SafeAreaView, TouchableOpacity, Button, TextInput, Alert, Image} from 'react-native';
-import Background from '../components/Background';
-import Card from '../components/Card';
-import CardText from '../components/CardText';
-import Input from '../components/Input';
-import { colorHelper } from '../helper/colorHelper';
+import React, { useState, useRef, useEffect } from "react";
+import {
+  StyleSheet,
+  Text,
+  View,
+  SafeAreaView,
+  Button,
+  Alert,
+  Image,
+} from "react-native";
+import Background from "../components/Background";
+import Card from "../components/Card";
+import CardText from "../components/CardText";
+import Input from "../components/Input";
+import { colorHelper } from "../helper/colorHelper";
 
 export default function GameScreen({ userData, onRestart }) {
-  const [gameState, setGameState] = useState('initial');
+  const [gameState, setGameState] = useState("initial");
   const [targetNumber, setTargetNumber] = useState(null);
-  const [guess, setGuess] = useState('');
+  const [guess, setGuess] = useState("");
   const [attempts, setAttempts] = useState(4);
   const [timer, setTimer] = useState(60);
   const [hintUsed, setHintUsed] = useState(false);
-  const [hintText, setHintText] = useState('');
+  const [hintText, setHintText] = useState("");
   const [guessResult, setGuessResult] = useState(null);
   const intervalRef = useRef(null);
 
@@ -29,10 +37,9 @@ export default function GameScreen({ userData, onRestart }) {
     return possibleNumbers[randomIndex];
   };
 
-
   const startGame = () => {
     setTargetNumber(generateTargetNumber());
-    setGameState('playing');
+    setGameState("playing");
     intervalRef.current = setInterval(() => {
       setTimer((prevTimer) => {
         if (prevTimer === 1) {
@@ -47,45 +54,52 @@ export default function GameScreen({ userData, onRestart }) {
 
   const handleSubmitGuess = () => {
     const guessNum = parseInt(guess);
-    if (isNaN(guessNum) || guessNum < 1 || guessNum > 100 || guessNum % lastDigit !== 0) {
-      Alert.alert("Invalid Input", `Number has to be a multiply of ${lastDigit} between 1 and 100.`);
+    if (
+      isNaN(guessNum) ||
+      guessNum < 1 ||
+      guessNum > 100 ||
+      guessNum % lastDigit !== 0
+    ) {
+      Alert.alert(
+        "Invalid Input",
+        `Number has to be a multiply of ${lastDigit} between 1 and 100.`
+      );
       return;
     }
 
-
-    setAttempts(prev => prev - 1);
+    setAttempts((prev) => prev - 1);
 
     if (guessNum === targetNumber) {
       clearInterval(intervalRef.current);
-      setGameState('won');
+      setGameState("won");
     } else {
       setGuessResult(guessNum > targetNumber ? "lower" : "higher");
-      setGameState('guessing');
+      setGameState("guessing");
     }
 
-    setGuess('');
+    setGuess("");
   };
 
   const useHint = () => {
     if (!hintUsed) {
-        const start = targetNumber >= 50 ? '50' : '1';
-        const end = targetNumber >= 50 ? '100' : '49';
-        setHintText(`The number is between ${start} and ${end}.`);
-        setHintUsed(true);
+      const start = targetNumber >= 50 ? "50" : "1";
+      const end = targetNumber >= 50 ? "100" : "49";
+      setHintText(`The number is between ${start} and ${end}.`);
+      setHintUsed(true);
     }
   };
-  
+
   const tryAgain = () => {
     if (attempts === 0) {
-      endGame('attempts');
-    } else{
-      setGameState('playing');
+      endGame("attempts");
+    } else {
+      setGameState("playing");
     }
   };
 
   const endGame = (reason) => {
     clearInterval(intervalRef.current);
-    setGameState('over');
+    setGameState("over");
     setGuessResult(reason);
   };
 
@@ -94,102 +108,136 @@ export default function GameScreen({ userData, onRestart }) {
     setAttempts(4);
     setTimer(60);
     setHintUsed(false);
-    setHintText('');
+    setHintText("");
     setGuessResult(null);
-    setGameState('playing');
+    setGameState("playing");
     startGame();
   };
 
   useEffect(() => {
     if (timer === 0) {
-      endGame('timer');
+      endGame("timer");
     }
   }, [timer]);
 
-
   const renderCard = () => {
     switch (gameState) {
-      case 'initial':
+      case "initial":
         return (
           <>
             <CardText style={styles.cardText}>
-              Guess a number between 1 & 100 that is multiply of {lastDigit} within 60 seconds and 4 attempts.
+              Guess a number between 1 & 100 that is multiply of {lastDigit}{" "}
+              within 60 seconds and 4 attempts.
             </CardText>
-            <Button title="Start" onPress={startGame} color="#0013FF" />
+            <Button
+              title="Start"
+              onPress={startGame}
+              color={colorHelper.primary}
+            />
           </>
         );
-      case 'playing':
+      case "playing":
         return (
           <>
             <CardText style={styles.cardText}>
-              Guess a number between 1 & 100 that is multiply of {lastDigit} within 60 seconds and 4 attempts.
+              Guess a number between 1 & 100 that is multiply of {lastDigit}{" "}
+              within 60 seconds and 4 attempts.
             </CardText>
-            <Input
-              style={styles.input}
-              onChangeText={setGuess}
-              value={guess}
-            />
-            {hintText !== '' && <Text style={styles.hintText}>{hintText}</Text>}
+            <Input style={styles.input} onChangeText={setGuess} value={guess} />
+            {hintText !== "" && <Text style={styles.hintText}>{hintText}</Text>}
             <View style={styles.infoContainer}>
               <Text style={styles.infoText}>Attempts left: {attempts}</Text>
               <Text style={styles.infoText}>Timer: {timer}s</Text>
             </View>
             <View style={styles.buttonContainer}>
-              <Button title="Use a Hint" color={colorHelper.primary} onPress={useHint} disabled={hintUsed} />
-              <Button title="Submit guess" color={colorHelper.primary} onPress={handleSubmitGuess} />
+              <Button
+                title="Use a Hint"
+                color={colorHelper.primary}
+                onPress={useHint}
+                disabled={hintUsed}
+              />
+              <Button
+                title="Submit guess"
+                color={colorHelper.primary}
+                onPress={handleSubmitGuess}
+              />
             </View>
           </>
         );
-      case 'guessing':
+      case "guessing":
         return (
           <>
-            <CardText style={styles.cardText}>You did not guess correct! {'\n'}
-              You should guess {guessResult}.</CardText>
+            <CardText style={styles.cardText}>
+              You did not guess correct! {"\n"}
+              You should guess {guessResult}.
+            </CardText>
             <View style={styles.buttonContainer}>
-              <Button title="Try Again" color={colorHelper.primary} onPress={tryAgain} />
-              <Button title="End the game" color={colorHelper.primary} onPress={() => endGame('gaveUp')} />
+              <Button
+                title="Try Again"
+                color={colorHelper.primary}
+                onPress={tryAgain}
+              />
+              <Button
+                title="End the game"
+                color={colorHelper.primary}
+                onPress={() => endGame("gaveUp")}
+              />
             </View>
           </>
         );
-      case 'won':
+      case "won":
         return (
           <>
-            <CardText style={styles.cardText}>You guessed correct!{'\n'}
-              Attempts used: {4 - attempts}</CardText>
-            <Image 
-              source={{uri: `https://picsum.photos/id/${targetNumber}/100/100`}}
+            <CardText style={styles.cardText}>
+              You guessed correct!{"\n"}
+              Attempts used: {4 - attempts}
+            </CardText>
+            <Image
+              source={{
+                uri: `https://picsum.photos/id/${targetNumber}/100/100`,
+              }}
               style={styles.image}
             />
-            <Button title="New Game" onPress={newGame} color={colorHelper.primary} />
+            <Button
+              title="New Game"
+              onPress={newGame}
+              color={colorHelper.primary}
+            />
           </>
         );
-      case 'over':
+      case "over":
         return (
           <>
             <CardText style={styles.cardText}>The game is over</CardText>
-            <Image source={require('../assets/sad-smiley.png')} style={styles.image} />
+            <Image
+              source={require("../assets/sad-smiley.png")}
+              style={styles.image}
+            />
             <CardText style={styles.cardText}>
-              {guessResult === 'timer' ? "You are out of time" : guessResult === 'attempts' ? "you are out of attempts" : "You end the game"}
+              {guessResult === "timer"
+                ? "You are out of time"
+                : guessResult === "attempts"
+                ? "you are out of attempts"
+                : "You end the game"}
             </CardText>
-            <Button title="New Game" onPress={newGame} color={colorHelper.primary} />
+            <Button
+              title="New Game"
+              onPress={newGame}
+              color={colorHelper.primary}
+            />
           </>
         );
     }
   };
 
-
   return (
     <Background>
       <SafeAreaView style={styles.safeArea}>
-
-
         <View style={styles.content}>
           <View style={styles.restartButton}>
             <Button title="Restart" onPress={onRestart} />
           </View>
-          <Card style={styles.card}>
-            {renderCard()}
-          </Card>
+          <Card style={styles.card}>{renderCard()}</Card>
         </View>
       </SafeAreaView>
     </Background>
@@ -199,28 +247,28 @@ export default function GameScreen({ userData, onRestart }) {
 const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
-    width: '100%',
+    width: "100%",
   },
   content: {
     flex: 1,
-    alignItems: 'center',
+    alignItems: "center",
     justifyContent: "center",
   },
   restartButton: {
-    alignSelf: 'flex-end',
+    alignSelf: "flex-end",
     marginBottom: 10,
-    marginRight: 10,    
+    marginRight: 10,
   },
   card: {
-    width: '80%',
-    alignItems: 'center',
+    width: "80%",
+    alignItems: "center",
   },
   cardText: {
-    textAlign: 'center',
+    textAlign: "center",
     marginBottom: 20,
   },
   infoContainer: {
-    alignItems: 'center',
+    alignItems: "center",
     marginBottom: 20,
   },
   infoText: {
@@ -229,15 +277,15 @@ const styles = StyleSheet.create({
     marginVertical: 4,
   },
   buttonContainer: {
-    justifyContent: 'space-between',
-    width: '100%',
+    justifyContent: "space-between",
+    width: "100%",
   },
   image: {
     width: 100,
     height: 100,
     marginVertical: 10,
   },
-  hintText:{
+  hintText: {
     fontSize: 16,
   },
 });
