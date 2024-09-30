@@ -149,7 +149,7 @@ export default function GameScreen({ userData, onRestart }) {
             <Text style={styles.cardText}>You guessed correct!
               Attempts used: {4 - attempts}</Text>
             <Image 
-              source={{uri: "https://picsum.photos/id/${targetNumber}/100/100"}}
+              source={{uri: `https://picsum.photos/id/${targetNumber}/100/100`}}
               style={styles.image}
             />
             <Button title="New Game" onPress={newGame} />
