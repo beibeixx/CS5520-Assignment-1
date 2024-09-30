@@ -1,6 +1,5 @@
 import { StyleSheet, Text, View, Modal, Button, TouchableOpacity} from 'react-native'
 import React from 'react'
-import { LinearGradient } from 'expo-linear-gradient';
 import Background from '../components/Background';
 import { colorHelper } from '../helper/colorHelper';
 import Card from '../components/Card';
@@ -22,10 +21,14 @@ export default function ConfirmScreen({ visible, userData, onGoBack, onContinue 
             <CardText style={styles.modalText}>{userData.email}</CardText>
             <CardText style={styles.modalText}>{userData.phone}</CardText>
             <CardText style={styles.modalText}>If it is not correct, please go back and edit them.</CardText>
-            <View style={styles.buttonContainer}>
-              <Button title="Go Back" color={colorHelper.secondary} onPress={onGoBack} />
-              <Button title="Continue" color={colorHelper.primary} onPress={onContinue} />
-          </View>
+            <View style={styles.buttonsRow}>
+              <View style={styles.buttonContainer}>
+                <Button title="Go Back" color={colorHelper.secondary} onPress={onGoBack} />
+                </View>
+                <View style={styles.buttonContainer}>
+                <Button title="Continue" color={colorHelper.primary} onPress={onContinue} />
+              </View>
+            </View>
           </Card>
         </View>
       </Background>
@@ -46,10 +49,13 @@ const styles = StyleSheet.create({
   modalText: {
     marginBottom: 5,
   },
-  buttonContainer: {
+  buttonsRow: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
-    width: '100%',
-    marginTop: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  buttonContainer: {
+    width: "40%",
+    margin: 5,
   },
 });

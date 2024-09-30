@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import { StyleSheet, Text, TextInput, View, Button, Alert, SafeAreaView } from 'react-native';
 import Checkbox from 'expo-checkbox';
-import { LinearGradient } from 'expo-linear-gradient';
 import ConfirmScreen from './ConfirmScreen'
 import Card from '../components/Card';
 import Background from '../components/Background';
 import { colorHelper } from '../helper/colorHelper';
 import CardText from '../components/CardText';
+import Input from '../components/Input';
 
 
 export default function StartScreen({ onStartGame }) {
@@ -95,7 +95,7 @@ export default function StartScreen({ onStartGame }) {
       <Text style={styles.title}>Welcome</Text>
       <Card style={styles.card}>
         <CardText>Name</CardText>
-        <TextInput 
+        <Input 
           style={styles.input}
           value={name}         
           onChangeText={handleNameChange}
@@ -103,7 +103,7 @@ export default function StartScreen({ onStartGame }) {
         <Text style={styles.errorText}>{errors.name}</Text>
 
         <CardText>Email address</CardText>
-        <TextInput 
+        <Input 
           style={styles.input}
           value={email}
           onChangeText={handleEmailChange}
@@ -111,7 +111,7 @@ export default function StartScreen({ onStartGame }) {
         <Text style={styles.errorText}>{errors.email}</Text>
 
         <CardText>Phone Number</CardText>
-        <TextInput 
+        <Input 
           style={styles.input}
           value={phone}
           onChangeText={handlePhoneChange}
@@ -126,14 +126,18 @@ export default function StartScreen({ onStartGame }) {
           <Text style={styles.label}>I am not a robot</Text>
         </View>
 
-        <View style={styles.buttonContainer}>
-          <Button title="Reset" color={colorHelper.secondary} onPress={handleReset} />
-          <Button
-            title="Register"
-            color={colorHelper.primary}
-            onPress={handleRegister}
-            disabled={!isChecked}
-          />
+        <View style={styles.buttonsRow}>
+          <View style={styles.buttonContainer}>
+            <Button title="Reset" color={colorHelper.secondary} onPress={handleReset} />
+          </View>
+          <View style={styles.buttonContainer}>
+            <Button
+              title="Register"
+              color={colorHelper.primary}
+              onPress={handleRegister}
+              disabled={!isChecked}
+            />
+          </View>
         </View>
       </Card>
     </SafeAreaView>
@@ -164,16 +168,6 @@ const styles = StyleSheet.create({
   card: {
     width: '80%',
   },
-  input: {
-    borderBottomWidth: 1,
-    borderBottomColor: '#33009F',
-    padding: 10,
-    marginBottom: 10,
-    borderRadius: 5,
-    color: colorHelper.text.primary,
-    fontWeight: 'bold',
-    textAlign: 'center',
-  },
   errorText: {
     color: colorHelper.text.secondary,
     marginBottom: 10,
@@ -185,8 +179,13 @@ const styles = StyleSheet.create({
   label: {
     margin: 8,
   },
-  buttonContainer: {
+  buttonsRow: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  buttonContainer: {
+    width: "40%",
+    margin: 5,
   },
 });

@@ -1,9 +1,9 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { StyleSheet, Text, View, SafeAreaView, TouchableOpacity, Button, TextInput, Alert, Image} from 'react-native';
-import { LinearGradient } from 'expo-linear-gradient';
 import Background from '../components/Background';
 import Card from '../components/Card';
 import CardText from '../components/CardText';
+import Input from '../components/Input';
 
 export default function GameScreen({ userData, onRestart }) {
   const [gameState, setGameState] = useState('initial');
@@ -121,7 +121,7 @@ export default function GameScreen({ userData, onRestart }) {
             <CardText style={styles.cardText}>
               Guess a number between 1 & 100 that is multiply of {lastDigit} within 60 seconds and 4 attempts.
             </CardText>
-            <TextInput
+            <Input
               style={styles.input}
               onChangeText={setGuess}
               value={guess}
@@ -218,15 +218,10 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginBottom: 20,
   },
-  input: {
-    borderBottomColor: '#33009F',
-    height: 40,
-    width: '25%',
-    borderBottomWidth: 2,
-    marginBottom: 40,
-    paddingHorizontal: 10,
-    textAlign: 'center',
-  },
+  // input: {
+  //   height: 40,
+  //   width: '40%',
+  // },
   infoContainer: {
     alignItems: 'center',
     marginBottom: 20,
