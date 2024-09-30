@@ -12,11 +12,13 @@ export default function GameScreen({ userData, onRestart }) {
   const [attempts, setAttempts] = useState(4);
   const [timer, setTimer] = useState(60);
   const [hintUsed, setHintUsed] = useState(false);
+  const [hintText, setHintText] = useState('');
   const [guessResult, setGuessResult] = useState(null);
   const intervalRef = useRef(null);
 
+  const lastDigit = parseInt(userData.phone.slice(-1));
+
   const generateTargetNumber = () => {
-    const lastDigit = parseInt(userData.phone.slice(-1));
     const possibleNumbers = [];
     for (let i = lastDigit; i <= 100; i += lastDigit) {
       possibleNumbers.push(i);
@@ -44,8 +46,8 @@ export default function GameScreen({ userData, onRestart }) {
 
   const handleSubmitGuess = () => {
     const guessNum = parseInt(guess);
-    if (isNaN(guessNum) || guessNum < 1 || guessNum > 100) {
-      Alert.alert("Invalid Input", "Please enter a number between 1 and 100.");
+    if (isNaN(guessNum) || guessNum < 1 || guessNum > 100 || guessNum % lastDigit !== 0) {
+      Alert.alert("Invalid Input", `Number has to be a multiply of ${lastDigit} between 1 and 100.`);
       return;
     }
 
@@ -67,13 +69,13 @@ export default function GameScreen({ userData, onRestart }) {
 
   const useHint = () => {
     if (!hintUsed) {
-      Alert.alert("Hint", `The number is ${targetNumber % 2 === 0 ? "even" : "odd"}.`);
-      setHintUsed(true);
-    } else {
-      Alert.alert("Hint Already Used", "You've already used your hint!");
+        const start = targetNumber >= 50 ? '50' : '1';
+        const end = targetNumber >= 50 ? '100' : '49';
+        setHintText(`The number is between ${start} and ${end}.`);
+        setHintUsed(true);
     }
   };
-
+  
   const tryAgain = () => {
     setGameState('playing');
   };
@@ -89,6 +91,7 @@ export default function GameScreen({ userData, onRestart }) {
     setAttempts(4);
     setTimer(60);
     setHintUsed(false);
+    setHintText('');
     setGuessResult(null);
     setGameState('playing');
     startGame();
@@ -107,7 +110,7 @@ export default function GameScreen({ userData, onRestart }) {
         return (
           <>
             <CardText style={styles.cardText}>
-              Guess a number between 1 & 100 that is multiply of {userData.phone[9]} within 60 seconds and 4 attempts.
+              Guess a number between 1 & 100 that is multiply of {lastDigit} within 60 seconds and 4 attempts.
             </CardText>
             <Button title="Start" onPress={startGame} color="#0013FF" />
           </>
@@ -116,13 +119,14 @@ export default function GameScreen({ userData, onRestart }) {
         return (
           <>
             <CardText style={styles.cardText}>
-              Guess a number between 1 & 100 that is multiply of {userData.phone[9]} within 60 seconds and 4 attempts.
+              Guess a number between 1 & 100 that is multiply of {lastDigit} within 60 seconds and 4 attempts.
             </CardText>
             <TextInput
               style={styles.input}
               onChangeText={setGuess}
               value={guess}
             />
+            {hintText !== '' && <Text style={styles.hintText}>{hintText}</Text>}
             <View style={styles.infoContainer}>
               <Text style={styles.infoText}>Attempts left: {attempts}</Text>
               <Text style={styles.infoText}>Timer: {timer}s</Text>
@@ -241,5 +245,7 @@ const styles = StyleSheet.create({
     height: 100,
     marginVertical: 10,
   },
+  hintText:{
+    fontSize: 16,
+  },
 });
-
