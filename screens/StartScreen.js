@@ -6,7 +6,7 @@ import ConfirmScreen from './ConfirmScreen'
 import Card from '../components/Card';
 import Background from '../components/Background';
 import { colorHelper } from '../helper/colorHelper';
-
+import CardText from '../components/CardText';
 
 
 export default function StartScreen({ onStartGame }) {
@@ -94,7 +94,7 @@ export default function StartScreen({ onStartGame }) {
     <SafeAreaView style={styles.safeArea}>
       <Text style={styles.title}>Welcome</Text>
       <Card style={styles.card}>
-        <Text style={styles.hint}>Name</Text>
+        <CardText>Name</CardText>
         <TextInput 
           style={styles.input}
           value={name}         
@@ -102,7 +102,7 @@ export default function StartScreen({ onStartGame }) {
         />
         <Text style={styles.errorText}>{errors.name}</Text>
 
-        <Text style={styles.hint}>Email address</Text>
+        <CardText>Email address</CardText>
         <TextInput 
           style={styles.input}
           value={email}
@@ -110,7 +110,7 @@ export default function StartScreen({ onStartGame }) {
         />
         <Text style={styles.errorText}>{errors.email}</Text>
 
-        <Text style={styles.hint}>Phone Number</Text>
+        <CardText>Phone Number</CardText>
         <TextInput 
           style={styles.input}
           value={phone}
@@ -157,15 +157,12 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 24,
     fontWeight: 'bold',
-    marginBottom: 60,
+    marginBottom: 40,
     textAlign: 'center',
     color: colorHelper.title,
   },
   card: {
     width: '80%',
-  },
-  hint: {
-    color: colorHelper.text.primary,
   },
   input: {
     borderBottomWidth: 1,

@@ -3,6 +3,7 @@ import { StyleSheet, Text, View, SafeAreaView, TouchableOpacity, Button, TextInp
 import { LinearGradient } from 'expo-linear-gradient';
 import Background from '../components/Background';
 import Card from '../components/Card';
+import CardText from '../components/CardText';
 
 export default function GameScreen({ userData, onRestart }) {
   const [gameState, setGameState] = useState('initial');
@@ -105,18 +106,18 @@ export default function GameScreen({ userData, onRestart }) {
       case 'initial':
         return (
           <>
-            <Text style={styles.cardText}>
+            <CardText style={styles.cardText}>
               Guess a number between 1 & 100 that is multiply of {userData.phone[9]} within 60 seconds and 4 attempts.
-            </Text>
+            </CardText>
             <Button title="Start" onPress={startGame} color="#0013FF" />
           </>
         );
       case 'playing':
         return (
           <>
-            <Text style={styles.cardText}>
+            <CardText style={styles.cardText}>
               Guess a number between 1 & 100 that is multiply of {userData.phone[9]} within 60 seconds and 4 attempts.
-            </Text>
+            </CardText>
             <TextInput
               style={styles.input}
               onChangeText={setGuess}
@@ -135,8 +136,8 @@ export default function GameScreen({ userData, onRestart }) {
       case 'guessing':
         return (
           <>
-            <Text style={styles.cardText}>You did not guess correct!
-              You should guess lower.</Text>
+            <CardText style={styles.cardText}>You did not guess correct!
+              You should guess {guessResult}.</CardText>
             <View style={styles.buttonContainer}>
               <Button title="Try Again" onPress={tryAgain} />
               <Button title="End the game" onPress={() => endGame('gaveUp')} />
@@ -146,8 +147,8 @@ export default function GameScreen({ userData, onRestart }) {
       case 'won':
         return (
           <>
-            <Text style={styles.cardText}>You guessed correct!
-              Attempts used: {4 - attempts}</Text>
+            <CardText style={styles.cardText}>You guessed correct!
+              Attempts used: {4 - attempts}</CardText>
             <Image 
               source={{uri: `https://picsum.photos/id/${targetNumber}/100/100`}}
               style={styles.image}
@@ -204,8 +205,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   cardText: {
-    fontSize: 16,
-    color: '#33009F',
     textAlign: 'center',
     marginBottom: 20,
   },
