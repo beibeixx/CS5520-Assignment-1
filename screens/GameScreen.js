@@ -178,10 +178,12 @@ export default function GameScreen({ userData, onRestart }) {
   return (
     <Background>
       <SafeAreaView style={styles.safeArea}>
-        <View style={styles.restartButton}>
-          <Button title="Restart" onPress={onRestart} />
-        </View>
+
+
         <View style={styles.content}>
+          <View style={styles.restartButton}>
+            <Button title="Restart" onPress={onRestart} />
+          </View>
           <Card style={styles.card}>
             {renderCard()}
           </Card>
@@ -202,7 +204,9 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   restartButton: {
-    paddingBottom: 30,
+    alignSelf: 'flex-end',
+    marginBottom: 10,
+    marginRight: 10,    
   },
   card: {
     width: '80%',

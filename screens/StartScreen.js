@@ -7,6 +7,7 @@ import Background from '../components/Background';
 import { colorHelper } from '../helper/colorHelper';
 import CardText from '../components/CardText';
 import Input from '../components/Input';
+import ButtonRow from '../components/ButtonSet';
 
 
 export default function StartScreen({ onStartGame }) {
@@ -126,7 +127,7 @@ export default function StartScreen({ onStartGame }) {
           <Text style={styles.label}>I am not a robot</Text>
         </View>
 
-        <View style={styles.buttonsRow}>
+        <ButtonRow>
           <View style={styles.buttonContainer}>
             <Button title="Reset" color={colorHelper.secondary} onPress={handleReset} />
           </View>
@@ -138,7 +139,7 @@ export default function StartScreen({ onStartGame }) {
               disabled={!isChecked}
             />
           </View>
-        </View>
+        </ButtonRow>
       </Card>
     </SafeAreaView>
     <ConfirmScreen
@@ -178,11 +179,6 @@ const styles = StyleSheet.create({
   },
   label: {
     margin: 8,
-  },
-  buttonsRow: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
   },
   buttonContainer: {
     width: "40%",

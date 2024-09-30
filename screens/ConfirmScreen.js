@@ -4,6 +4,7 @@ import Background from '../components/Background';
 import { colorHelper } from '../helper/colorHelper';
 import Card from '../components/Card';
 import CardText from '../components/CardText';
+import ButtonRow from '../components/ButtonSet';
 
 
 export default function ConfirmScreen({ visible, userData, onGoBack, onContinue }) {
@@ -21,14 +22,14 @@ export default function ConfirmScreen({ visible, userData, onGoBack, onContinue 
             <CardText style={styles.modalText}>{userData.email}</CardText>
             <CardText style={styles.modalText}>{userData.phone}</CardText>
             <CardText style={styles.modalText}>If it is not correct, please go back and edit them.</CardText>
-            <View style={styles.buttonsRow}>
+            <ButtonRow>
               <View style={styles.buttonContainer}>
                 <Button title="Go Back" color={colorHelper.secondary} onPress={onGoBack} />
                 </View>
                 <View style={styles.buttonContainer}>
                 <Button title="Continue" color={colorHelper.primary} onPress={onContinue} />
               </View>
-            </View>
+            </ButtonRow>
           </Card>
         </View>
       </Background>
@@ -48,11 +49,6 @@ const styles = StyleSheet.create({
   },
   modalText: {
     marginBottom: 5,
-  },
-  buttonsRow: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
   },
   buttonContainer: {
     width: "40%",
