@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { StyleSheet, Text, View, SafeAreaView, TouchableOpacity, Button, TextInput, Alert, Image} from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
+import Background from '../components/Background';
 
 export default function GameScreen({ userData, onRestart }) {
   const [gameState, setGameState] = useState('initial');
@@ -169,7 +170,7 @@ export default function GameScreen({ userData, onRestart }) {
 
 
   return (
-    <LinearGradient colors={['#77c8f0', '#7482bc']} style={styles.gradient}>
+    <Background>
       <SafeAreaView style={styles.safeArea}>
         <View style={styles.restartButton}>
           <Button title="Restart" onPress={onRestart} />
@@ -180,7 +181,7 @@ export default function GameScreen({ userData, onRestart }) {
           </View>
         </View>
       </SafeAreaView>
-    </LinearGradient>
+    </Background>
   );
 }
 

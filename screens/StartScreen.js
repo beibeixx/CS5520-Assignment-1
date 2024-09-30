@@ -3,6 +3,8 @@ import { StyleSheet, Text, TextInput, View, Button, Alert, SafeAreaView } from '
 import Checkbox from 'expo-checkbox';
 import { LinearGradient } from 'expo-linear-gradient';
 import ConfirmScreen from './ConfirmScreen'
+import Card from '../components/Card';
+import Background from '../components/Background';
 
 
 export default function StartScreen({ onStartGame }) {
@@ -87,10 +89,7 @@ export default function StartScreen({ onStartGame }) {
 
   return (
 
-    <LinearGradient
-      colors={styles.gradientColors}
-      style={styles.gradient}
-    > 
+    <Background>
     <SafeAreaView style={styles.safeArea}>
       <Text style={styles.title}>Welcome</Text>
       <View style={styles.card}>
@@ -143,8 +142,8 @@ export default function StartScreen({ onStartGame }) {
       onGoBack={handleConfirmGoBack}
       onContinue={handleConfirmContinue} 
     />
-    </LinearGradient>
-  );
+    </Background>  
+);
 }
 
 const styles = StyleSheet.create({

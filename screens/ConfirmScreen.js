@@ -1,6 +1,7 @@
 import { StyleSheet, Text, View, Modal, Button, TouchableOpacity} from 'react-native'
 import React from 'react'
 import { LinearGradient } from 'expo-linear-gradient';
+import Background from '../components/Background';
 
 
 export default function ConfirmScreen({ visible, userData, onGoBack, onContinue }) {
@@ -10,10 +11,7 @@ export default function ConfirmScreen({ visible, userData, onGoBack, onContinue 
       transparent={true}
       visible={visible}
     >
-    <LinearGradient
-      colors={['rgba(119,200,240,0.9)', 'rgba(116,130,188,0.9)']}
-      style={styles.gradient}
-    >
+    <Background isTransparent={true}>
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
             <Text style={styles.modalText}>Hello {userData.name}</Text>
@@ -27,7 +25,7 @@ export default function ConfirmScreen({ visible, userData, onGoBack, onContinue 
           </View>
           </View>
         </View>
-      </LinearGradient>
+      </Background>
     </Modal>
   );
 }
