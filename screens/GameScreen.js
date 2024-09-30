@@ -156,6 +156,8 @@ export default function GameScreen({ userData, onRestart }) {
                 onPress={useHint}
                 disabled={hintUsed}
               />
+            </View>
+            <View style={styles.buttonContainer}>
               <Button
                 title="Submit guess"
                 color={colorHelper.primary}
@@ -177,6 +179,8 @@ export default function GameScreen({ userData, onRestart }) {
                 color={colorHelper.primary}
                 onPress={tryAgain}
               />
+            </View>
+            <View style={styles.buttonContainer}>
               <Button
                 title="End the game"
                 color={colorHelper.primary}
@@ -256,7 +260,7 @@ const styles = StyleSheet.create({
   },
   restartButton: {
     alignSelf: "flex-end",
-    marginBottom: 10,
+    marginBottom: 20,
     marginRight: 10,
   },
   card: {
@@ -277,8 +281,8 @@ const styles = StyleSheet.create({
     marginVertical: 4,
   },
   buttonContainer: {
-    justifyContent: "space-between",
-    width: "100%",
+    width: "auto",
+    margin: 2,
   },
   image: {
     width: 100,

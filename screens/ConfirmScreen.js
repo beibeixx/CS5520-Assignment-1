@@ -68,7 +68,7 @@ const styles = StyleSheet.create({
     marginBottom: 5,
   },
   buttonContainer: {
-    width: "40%",
-    margin: 5,
+    width: "30%",
+    margin: 20,
   },
 });
